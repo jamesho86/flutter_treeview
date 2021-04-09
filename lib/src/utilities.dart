@@ -44,9 +44,9 @@ class Utilities {
       int g = 0;
       int b = 0;
       for (var part in parts) {
-        r = int.parse(part.group(1));
-        g = int.parse(part.group(2));
-        b = int.parse(part.group(3));
+        r = int.parse(part.group(1)!);
+        g = int.parse(part.group(2)!);
+        b = int.parse(part.group(3)!);
       }
       return Color.fromARGB(255, r, g, b);
     } else if (_rgbaExp.hasMatch(value)) {
@@ -56,10 +56,10 @@ class Utilities {
       int b = 0;
       double a = 1;
       for (var part in parts) {
-        r = int.parse(part.group(1));
-        g = int.parse(part.group(2));
-        b = int.parse(part.group(3));
-        a = double.parse(part.group(4));
+        r = int.parse(part.group(1)!);
+        g = int.parse(part.group(2)!);
+        b = int.parse(part.group(3)!);
+        a = double.parse(part.group(4)!);
       }
       return Color.fromARGB((255 * a).toInt(), r, g, b);
     } else if (_materialDesignColorExp.hasMatch(value)) {
@@ -665,8 +665,8 @@ class Utilities {
     return base64Url.encode(values).substring(0, length);
   }
 
-  static IconData getIcon(String value) {
-    final String lowered = value == null ? '' : value.toLowerCase();
+  static IconData? getIcon(String value) {
+    final String lowered = value.toLowerCase();
     switch (lowered) {
       case 'ac_unit':
         return Icons.ac_unit;
@@ -2638,9 +2638,8 @@ class Utilities {
         return Icons.zoom_out;
       case 'zoom_out_map':
         return Icons.zoom_out_map;
-      default:
-        return null;
     }
+    return null;
   }
 
   static bool truthful(value) {

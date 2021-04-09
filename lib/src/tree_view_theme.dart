@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_treeview/src/expander_theme_data.dart';
 import 'package:flutter_treeview/src/tree_node.dart';
 
@@ -25,11 +26,11 @@ class TreeViewTheme {
 
   /// Vertical spacing between tabs.
   /// If this property is null then [dense] attribute will work and vice versa.
-  final double verticalSpacing;
+  final double? verticalSpacing;
 
   /// Horizontal spacing between tabs.
   /// If this property is null then horizontal spacing between tabs is default [_treeView.theme.iconTheme.size + 5]
-  final double horizontalSpacing;
+  final double? horizontalSpacing;
 
   /// Horizontal padding for node icons.
   final double iconPadding;
@@ -48,11 +49,11 @@ class TreeViewTheme {
 
   /// The text overflow for child [TreeNode] text.
   /// If this property is null then [softWrap] is true;
-  final TextOverflow labelOverflow;
+  final TextOverflow? labelOverflow;
 
   /// The text overflow for parent [TreeNode] text.
   /// If this property is null then [softWrap] is true;
-  final TextOverflow parentLabelOverflow;
+  final TextOverflow? parentLabelOverflow;
 
   /// the speed at which expander icon animates.
   final Duration expandSpeed;
@@ -99,18 +100,18 @@ class TreeViewTheme {
   /// Creates a copy of this theme but with the given fields replaced with
   /// the new values.
   TreeViewTheme copyWith({
-    ColorScheme colorScheme,
-    IconThemeData iconTheme,
-    ExpanderThemeData expanderTheme,
-    TextStyle labelStyle,
-    TextStyle parentLabelStyle,
-    TextOverflow labelOverflow,
-    TextOverflow parentLabelOverflow,
-    bool dense,
-    double verticalSpacing,
-    double horizontalSpacing,
-    double iconPadding,
-    double levelPadding,
+    ColorScheme? colorScheme,
+    IconThemeData? iconTheme,
+    ExpanderThemeData? expanderTheme,
+    TextStyle? labelStyle,
+    TextStyle? parentLabelStyle,
+    TextOverflow? labelOverflow,
+    TextOverflow? parentLabelOverflow,
+    bool? dense,
+    double? verticalSpacing,
+    double? horizontalSpacing,
+    double? iconPadding,
+    double? levelPadding,
   }) {
     return TreeViewTheme(
         colorScheme: colorScheme ?? this.colorScheme,
@@ -131,7 +132,6 @@ class TreeViewTheme {
   /// replaced by the non-null parameters of the given icon theme. If the given
   /// [TreeViewTheme] is null, simply returns this theme.
   TreeViewTheme merge(TreeViewTheme other) {
-    if (other == null) return this;
     return copyWith(
         colorScheme: other.colorScheme,
         levelPadding: other.levelPadding,

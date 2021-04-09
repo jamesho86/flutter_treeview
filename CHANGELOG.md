@@ -1,3 +1,7 @@
+## [1.0.0+1]
+
+* Null safe migration
+
 ## [0.9.0+1]
 
 ### Added

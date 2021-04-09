@@ -28,46 +28,46 @@ void main() {
   group('TreeViewController Tests', () {
     test('...get node', () {
       TreeViewController controller = TreeViewController(children: nodes);
-      Node validNode = controller.getNode('pd1');
-      Node invalidNode = controller.getNode('xpd1');
+      Node? validNode = controller.getNode('pd1');
+      Node? invalidNode = controller.getNode('xpd1');
       expect(controller.children.length, 4);
       expect(validNode.runtimeType, Node);
-      expect(validNode.label, 'Resume.docx');
+      expect(validNode!.label, 'Resume.docx');
       expect(invalidNode.runtimeType, Null);
     });
     test('...get parent', () {
       TreeViewController controller = TreeViewController(children: nodes);
-      Node nodeParent = controller.getParent('pd1');
-      Node rootParent = controller.getParent('docs');
-      Node noParent = controller.getParent('xpd1');
+      Node? nodeParent = controller.getParent('pd1');
+      Node? rootParent = controller.getParent('docs');
+      Node? noParent = controller.getParent('xpd1');
       expect(nodeParent.runtimeType, Node);
-      expect(nodeParent.key, 'd3');
-      expect(rootParent.runtimeType, Node);
+      expect(nodeParent!.key, 'd3');
+      expect(rootParent!.runtimeType, Node);
       expect(rootParent.key, 'docs');
       expect(noParent.runtimeType, Null);
     });
     test('...update node', () {
-      TreeViewController controller = TreeViewController(children: nodes);
-      Node node = controller.getNode('pd1');
-      Node updatedNode = node.copyWith(
+      TreeViewController? controller = TreeViewController(children: nodes);
+      Node? node = controller.getNode('pd1');
+      Node updatedNode = node!.copyWith(
         key: 'pdf1',
         label: 'My Resume.pdf',
       );
       List<Node> newChildren = controller.updateNode(node.key, updatedNode);
       controller = TreeViewController(children: newChildren);
-      Node validNode = controller.getNode('pdf1');
-      Node invalidNode = controller.getNode('pd1');
+      Node? validNode = controller.getNode('pdf1');
+      Node? invalidNode = controller.getNode('pd1');
       expect(validNode.runtimeType, Node);
-      expect(validNode.key, updatedNode.key);
+      expect(validNode!.key, updatedNode.key);
       expect(validNode.label, updatedNode.label);
-      expect(invalidNode.runtimeType, Null);
+      expect(invalidNode, null);
     });
     test('...delete child node', () {
       TreeViewController controller = TreeViewController(children: nodes);
       List<Node> newChildren = controller.deleteNode('pd1');
       controller = TreeViewController(children: newChildren);
-      Node invalidNode = controller.getNode('pd1');
-      expect(invalidNode.runtimeType, Null);
+      Node? invalidNode = controller.getNode('pd1');
+      expect(invalidNode, null);
     });
     test('...delete parent node', () {
       TreeViewController controller = TreeViewController(children: nodes);
@@ -82,14 +82,14 @@ void main() {
     });
     test('...add child node', () {
       TreeViewController controller = TreeViewController(children: nodes);
-      Node invalidNode = controller.getNode('pd3');
-      expect(invalidNode.runtimeType, Null);
+      Node? invalidNode = controller.getNode('pd3');
+      expect(invalidNode, null);
       Node newNode = Node(label: 'References.docx', key: 'pd3');
       List<Node> newChildren = controller.addNode('d3', newNode);
       controller = TreeViewController(children: newChildren);
-      Node validNode = controller.getNode('pd3');
+      Node? validNode = controller.getNode('pd3');
       expect(validNode.runtimeType, Node);
-      expect(validNode.label, newNode.label);
+      expect(validNode!.label, newNode.label);
     });
   });
 }

@@ -26,12 +26,12 @@ void main() {
   });
   group('icon', () {
     test('from value', () {
-      final IconData icon = Utilities.getIcon('adb');
+      final IconData? icon = Utilities.getIcon('adb');
       expect(icon, Icons.adb);
       expect(icon.runtimeType, IconData);
     });
     test('from values', () {
-      final IconData icon = Utilities.getIcon('CROP_16_9');
+      final IconData? icon = Utilities.getIcon('CROP_16_9');
       expect(icon, Icons.crop_16_9);
       expect(icon.runtimeType, IconData);
     });
