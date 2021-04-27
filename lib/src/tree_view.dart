@@ -32,6 +32,9 @@ class TreeView extends InheritedWidget {
   /// The tap handler for a node. Passes the node key.
   final Function(String) onNodeTap;
 
+  /// The longpress handler for a node. Passes the node key.
+  final Function(String) onNodeLongPress;
+
   /// Custom builder for nodes. Parameters are the build context and tree node.
   final Function(BuildContext, Node) nodeBuilder;
 
@@ -80,6 +83,7 @@ class TreeView extends InheritedWidget {
     Key key,
     @required this.controller,
     this.onNodeTap,
+    this.onNodeLongPress,
     this.onNodeDoubleTap,
     this.physics,
     this.onExpansionChanged,
@@ -107,6 +111,7 @@ class TreeView extends InheritedWidget {
   bool updateShouldNotify(TreeView oldWidget) {
     return oldWidget.controller.children != this.controller.children ||
         oldWidget.onNodeTap != this.onNodeTap ||
+        oldWidget.onNodeLongPress != this.onNodeLongPress ||
         oldWidget.onExpansionChanged != this.onExpansionChanged ||
         oldWidget.theme != this.theme ||
         oldWidget.supportParentDoubleTap != this.supportParentDoubleTap ||
