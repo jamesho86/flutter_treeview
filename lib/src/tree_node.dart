@@ -31,7 +31,7 @@ class TreeNode extends StatefulWidget {
 class _TreeNodeState extends State<TreeNode>
     with SingleTickerProviderStateMixin {
   static final Animatable<double> _easeInTween =
-      CurveTween(curve: Curves.easeIn);
+  CurveTween(curve: Curves.easeIn);
   static double _kIconSize = 28;
 
   AnimationController _controller;
@@ -114,7 +114,7 @@ class _TreeNodeState extends State<TreeNode>
       _treeView.onNodeLongPress(widget.node.key);
     }
   }
-  
+
   void _handleDoubleTap() {
     TreeView _treeView = TreeView.of(context);
     assert(_treeView != null, 'TreeView must exist in context');
@@ -129,16 +129,16 @@ class _TreeNodeState extends State<TreeNode>
     TreeViewTheme _theme = _treeView.theme;
     return widget.node.isParent
         ? GestureDetector(
-            onTap: () => _handleExpand(),
-            child: _TreeNodeExpander(
-              speed: _controller.duration,
-              expanded: widget.node.expanded,
-              themeData: _theme.expanderTheme,
-            ),
-          )
+      onTap: () => _handleExpand(),
+      child: _TreeNodeExpander(
+        speed: _controller.duration,
+        expanded: widget.node.expanded,
+        themeData: _theme.expanderTheme,
+      ),
+    )
         : Container(
-            width: 10,
-          );
+      width: 10,
+    );
   }
 
   Widget _buildNodeIcon() {
@@ -150,15 +150,15 @@ class _TreeNodeState extends State<TreeNode>
     return Container(
       alignment: Alignment.center,
       width:
-          widget.node.hasIcon ? _theme.iconTheme.size + _theme.iconPadding : 0,
+      widget.node.hasIcon ? _theme.iconTheme.size + _theme.iconPadding : 0,
       child: widget.node.hasIcon
           ? Icon(
-              widget.node.icon,
-              size: _theme.iconTheme.size,
-              color: isSelected
-                  ? _theme.colorScheme.onPrimary
-                  : _theme.iconTheme.color,
-            )
+        widget.node.icon,
+        size: _theme.iconTheme.size,
+        color: isSelected
+            ? _theme.colorScheme.onPrimary
+            : _theme.iconTheme.color,
+      )
           : null,
     );
   }
@@ -198,30 +198,48 @@ class _TreeNodeState extends State<TreeNode>
         children: <Widget>[
           widget.node.hasImage ? image : icon,
           Expanded(
-            child: Text(
-              ' ${widget.node.label}',
-              softWrap: widget.node.isParent
-                  ? _theme.parentLabelOverflow == null
-                  : _theme.labelOverflow == null,
-              overflow: widget.node.isParent
-                  ? _theme.parentLabelOverflow
-                  : _theme.labelOverflow,
-              style: widget.node.isParent
-                  ? _theme.parentLabelStyle.copyWith(
-                      fontWeight: _theme.parentLabelStyle.fontWeight,
-                      color: isSelected
-                          ? _theme.colorScheme.onPrimary
-                          : _theme.parentLabelStyle.color,
-                    )
-                  : _theme.labelStyle.copyWith(
-                      fontWeight: _theme.labelStyle.fontWeight,
-                      color: isSelected ? _theme.colorScheme.onPrimary : null,
-                    ),
-            ),
-          ),
+              child: Row(children: [Text(' ${widget.node.label}',
+                softWrap: widget.node.isParent
+                    ? _theme.parentLabelOverflow == null
+                    : _theme.labelOverflow == null,
+                overflow: widget.node.isParent
+                    ? _theme.parentLabelOverflow
+                    : _theme.labelOverflow,
+                style: widget.node.isParent
+                    ? _theme.parentLabelStyle.copyWith(
+                  fontWeight: _theme.parentLabelStyle.fontWeight,
+                  color: isSelected
+                      ? _theme.colorScheme.onPrimary
+                      : _theme.parentLabelStyle.color,
+                )
+                    : _theme.labelStyle.copyWith(
+                  fontWeight: _theme.labelStyle.fontWeight,
+                  color: isSelected ? _theme.colorScheme.onPrimary : null,
+                ),
+              ),
+                if (widget.node.isParent && _theme.showChildrenCount) Text(' (${widget.node.children != null ? widget.node.children.length : 0})',
+                  softWrap: widget.node.isParent
+                      ? _theme.parentLabelOverflow == null
+                      : _theme.labelOverflow == null,
+                  overflow: widget.node.isParent
+                      ? _theme.parentLabelOverflow
+                      : _theme.labelOverflow,
+                  style: widget.node.isParent
+                      ? _theme.parentLabelStyle.copyWith(
+                    fontSize: _theme.parentLabelStyle.fontSize - 4,
+                    fontWeight: FontWeight.normal,
+                    color: isSelected
+                        ? _theme.colorScheme.onSecondary
+                        : _theme.parentLabelStyle.color,
+                  )
+                      : _theme.labelStyle.copyWith(
+                    fontWeight: _theme.labelStyle.fontWeight,
+                    color: isSelected ? _theme.colorScheme.onPrimary : null,
+                  ),
+                ),
+              ])),
         ],
-      ),
-    );
+      ),);
   }
 
   Widget _buildNodeWidget() {
@@ -237,18 +255,18 @@ class _TreeNodeState extends State<TreeNode>
         : _buildNodeLabel();
     Widget _tappable = _treeView.onNodeDoubleTap != null
         ? InkWell(
-            hoverColor: Colors.blue,
-            onTap: _handleTap,
-            onLongPress: _handleLongPress,
-            onDoubleTap: _handleDoubleTap,
-            child: labelContainer,
-          )
+      hoverColor: Colors.blue,
+      onTap: _handleTap,
+      onLongPress: _handleLongPress,
+      onDoubleTap: _handleDoubleTap,
+      child: labelContainer,
+    )
         : InkWell(
-            hoverColor: Colors.blue,
-            onTap: _handleTap,
-            onLongPress: _handleLongPress,
-            child: labelContainer,
-          );
+      hoverColor: Colors.blue,
+      onTap: _handleTap,
+      onLongPress: _handleLongPress,
+      child: labelContainer,
+    );
     if (widget.node.isParent) {
       if (_treeView.supportParentDoubleTap && canSelectParent) {
         _tappable = InkWell(
@@ -282,17 +300,17 @@ class _TreeNodeState extends State<TreeNode>
         crossAxisAlignment: CrossAxisAlignment.center,
         children: _theme.expanderTheme.position == ExpanderPosition.end
             ? <Widget>[
-                Expanded(
-                  child: _tappable,
-                ),
-                arrowContainer,
-              ]
+          Expanded(
+            child: _tappable,
+          ),
+          arrowContainer,
+        ]
             : <Widget>[
-                arrowContainer,
-                Expanded(
-                  child: _tappable,
-                ),
-              ],
+          arrowContainer,
+          Expanded(
+            child: _tappable,
+          ),
+        ],
       ),
     );
   }
@@ -306,37 +324,37 @@ class _TreeNodeState extends State<TreeNode>
     final nodeWidget = _buildNodeWidget();
     return widget.node.isParent
         ? AnimatedBuilder(
-            animation: _controller.view,
-            builder: (BuildContext context, Widget child) {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  nodeWidget,
-                  ClipRect(
-                    child: Align(
-                      heightFactor: _heightFactor.value,
-                      child: child,
-                    ),
-                  ),
-                ],
-              );
-            },
-            child: closed
-                ? null
-                : Container(
-                    margin: EdgeInsets.only(
-                        left: _treeView.theme.horizontalSpacing ??
-                            _treeView.theme.iconTheme.size),
-                    child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: widget.node.children.map((Node node) {
-                          return TreeNode(node: node);
-                        }).toList()),
-                  ),
-          )
+      animation: _controller.view,
+      builder: (BuildContext context, Widget child) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            nodeWidget,
+            ClipRect(
+              child: Align(
+                heightFactor: _heightFactor.value,
+                child: child,
+              ),
+            ),
+          ],
+        );
+      },
+      child: closed
+          ? null
+          : Container(
+        margin: EdgeInsets.only(
+            left: _treeView.theme.horizontalSpacing ??
+                _treeView.theme.iconTheme.size),
+        child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: widget.node.children.map((Node node) {
+              return TreeNode(node: node);
+            }).toList()),
+      ),
+    )
         : Container(
-            child: nodeWidget,
-          );
+      child: nodeWidget,
+    );
   }
 }
 
@@ -367,8 +385,8 @@ class _TreeNodeExpanderState extends State<_TreeNodeExpander>
       controller = AnimationController(
         duration: widget.themeData.animated
             ? isEnd
-                ? widget._expandSpeed * 0.625
-                : widget._expandSpeed
+            ? widget._expandSpeed * 0.625
+            : widget._expandSpeed
             : Duration(milliseconds: 0),
         vsync: this,
       );
@@ -399,8 +417,8 @@ class _TreeNodeExpanderState extends State<_TreeNodeExpander>
         if (widget.themeData.type != ExpanderType.plusMinus) {
           controller.duration = widget.themeData.animated
               ? isEnd
-                  ? widget._expandSpeed * 0.625
-                  : widget._expandSpeed
+              ? widget._expandSpeed * 0.625
+              : widget._expandSpeed
               : Duration(milliseconds: 0);
           animation = Tween<double>(
             begin: 0,
@@ -434,7 +452,10 @@ class _TreeNodeExpanderState extends State<_TreeNodeExpander>
     BoxShape _shapeBorder = BoxShape.rectangle;
     Color _backColor = Colors.transparent;
     Color _iconColor =
-        widget.themeData.color ?? Theme.of(context).iconTheme.color;
+        widget.themeData.color ?? Theme
+            .of(context)
+            .iconTheme
+            .color;
     switch (widget.themeData.modifier) {
       case ExpanderModifier.none:
         break;
@@ -493,9 +514,9 @@ class _TreeNodeExpanderState extends State<_TreeNodeExpander>
         border: _borderWidth == 0
             ? null
             : Border.all(
-                width: _borderWidth,
-                color: widget.themeData.color ?? Colors.black,
-              ),
+          width: _borderWidth,
+          color: widget.themeData.color ?? Colors.black,
+        ),
         color: _backColor,
       ),
       child: AnimatedBuilder(

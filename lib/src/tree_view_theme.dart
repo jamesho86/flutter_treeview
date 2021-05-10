@@ -57,6 +57,9 @@ class TreeViewTheme {
   /// the speed at which expander icon animates.
   final Duration expandSpeed;
 
+  /// show the count of children for parent counts in the label
+  final bool showChildrenCount;
+
   const TreeViewTheme({
     this.colorScheme: const ColorScheme.light(),
     this.iconTheme: const IconThemeData.fallback(),
@@ -71,6 +74,7 @@ class TreeViewTheme {
     this.horizontalSpacing,
     this.iconPadding: 8,
     this.expandSpeed: const Duration(milliseconds: _kExpandSpeed),
+    this.showChildrenCount: false,
   });
 
   /// Creates a [TreeView] theme with some reasonable default values.
@@ -94,6 +98,7 @@ class TreeViewTheme {
         horizontalSpacing = null,
         iconPadding = 8,
         levelPadding = _kDefaultLevelPadding,
+        showChildrenCount = false,
         expandSpeed = const Duration(milliseconds: _kExpandSpeed);
 
   /// Creates a copy of this theme but with the given fields replaced with
@@ -111,6 +116,7 @@ class TreeViewTheme {
     double horizontalSpacing,
     double iconPadding,
     double levelPadding,
+    bool showChildrenCount,
   }) {
     return TreeViewTheme(
         colorScheme: colorScheme ?? this.colorScheme,
@@ -124,7 +130,8 @@ class TreeViewTheme {
         horizontalSpacing: horizontalSpacing ?? this.horizontalSpacing,
         parentLabelStyle: parentLabelStyle ?? this.parentLabelStyle,
         labelOverflow: labelOverflow ?? this.labelOverflow,
-        parentLabelOverflow: parentLabelOverflow ?? this.parentLabelOverflow);
+        parentLabelOverflow: parentLabelOverflow ?? this.parentLabelOverflow,
+        showChildrenCount: showChildrenCount ?? this.showChildrenCount);
   }
 
   /// Returns a new theme that matches this [TreeView] theme but with some values
@@ -144,7 +151,8 @@ class TreeViewTheme {
         horizontalSpacing: other.horizontalSpacing,
         parentLabelStyle: other.parentLabelStyle,
         labelOverflow: other.labelOverflow,
-        parentLabelOverflow: other.parentLabelOverflow);
+        parentLabelOverflow: other.parentLabelOverflow,
+        showChildrenCount: other.showChildrenCount);
   }
 
   TreeViewTheme resolve(BuildContext context) => this;
@@ -166,7 +174,8 @@ class TreeViewTheme {
         horizontalSpacing,
         parentLabelStyle,
         labelOverflow,
-        parentLabelOverflow);
+        parentLabelOverflow,
+        showChildrenCount);
   }
 
   @override
@@ -185,6 +194,7 @@ class TreeViewTheme {
         other.horizontalSpacing == horizontalSpacing &&
         other.parentLabelStyle == parentLabelStyle &&
         other.labelOverflow == labelOverflow &&
-        other.parentLabelOverflow == parentLabelOverflow;
+        other.parentLabelOverflow == parentLabelOverflow &&
+        other.showChildrenCount == showChildrenCount;
   }
 }
