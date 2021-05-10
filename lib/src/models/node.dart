@@ -25,6 +25,9 @@ class Node<T> {
   /// An optional icon that is displayed on the [TreeNode].
   final IconData icon;
 
+  /// display image instead of icon if present
+  final Image image;
+
   /// The open or closed state of the [TreeNode]. Applicable only if the
   /// node is a parent
   final bool expanded;
@@ -47,6 +50,7 @@ class Node<T> {
     this.expanded: false,
     this.parent: false,
     this.icon,
+    this.image,
     this.data,
   })  : assert(key != null),
         assert(label != null);
@@ -71,6 +75,7 @@ class Node<T> {
     String _label = map['label'];
     var _data = map['data'];
     IconData _icon;
+    Image _image;
     List<Node> _children = [];
     if (_key == null) {
       _key = Utilities.generateRandom();
@@ -96,6 +101,7 @@ class Node<T> {
       key: '$_key',
       label: _label,
       icon: _icon,
+      image: _image,
       data: _data,
       expanded: Utilities.truthful(map['expanded']),
       parent: Utilities.truthful(map['parent']),
@@ -112,12 +118,14 @@ class Node<T> {
     bool expanded,
     bool parent,
     IconData icon,
+    Image image,
     T data,
   }) =>
       Node(
         key: key ?? this.key,
         label: label ?? this.label,
         icon: icon ?? this.icon,
+        image: image ?? this.image,
         expanded: expanded ?? this.expanded,
         parent: parent ?? this.parent,
         children: children ?? this.children,
@@ -130,6 +138,9 @@ class Node<T> {
   /// Whether this object has a non-null icon.
   bool get hasIcon => icon != null && icon != null;
 
+  /// Whether this object has a non-null image.
+  bool get hasImage => image != null && image != null;
+
   /// Whether this object has data associated with it.
   bool get hasData => data != null;
 
@@ -139,6 +150,7 @@ class Node<T> {
       "key": key,
       "label": label,
       "icon": icon == null ? null : icon.codePoint,
+      "image": image == null ? null : image,
       "expanded": expanded,
       "parent": parent,
       "children": children.map((Node child) => child.asMap).toList(),
@@ -158,6 +170,7 @@ class Node<T> {
       key,
       label,
       icon,
+      image,
       expanded,
       parent,
       children,
@@ -172,6 +185,7 @@ class Node<T> {
         other.key == key &&
         other.label == label &&
         other.icon == icon &&
+        other.image == image &&
         other.expanded == expanded &&
         other.parent == parent &&
         other.data.runtimeType == T &&

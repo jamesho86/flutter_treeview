@@ -163,6 +163,22 @@ class _TreeNodeState extends State<TreeNode>
     );
   }
 
+  Widget _buildNodeImage() {
+    TreeView _treeView = TreeView.of(context);
+    assert(_treeView != null, 'TreeView must exist in context');
+    TreeViewTheme _theme = _treeView.theme;
+    bool isSelected = _treeView.controller.selectedKey != null &&
+        _treeView.controller.selectedKey == widget.node.key;
+    return Container(
+      alignment: Alignment.center,
+      width:
+      widget.node.hasImage ? _theme.iconTheme.size + _theme.iconPadding : 0,
+      child: widget.node.hasImage
+          ? widget.node.image
+          : null,
+    );
+  }
+
   Widget _buildNodeLabel() {
     TreeView _treeView = TreeView.of(context);
     assert(_treeView != null, 'TreeView must exist in context');
@@ -170,6 +186,7 @@ class _TreeNodeState extends State<TreeNode>
     bool isSelected = _treeView.controller.selectedKey != null &&
         _treeView.controller.selectedKey == widget.node.key;
     final icon = _buildNodeIcon();
+    final image = _buildNodeImage();
     return Container(
       padding: EdgeInsets.symmetric(
         vertical: _theme.verticalSpacing ?? (_theme.dense ? 10 : 15),
@@ -179,10 +196,10 @@ class _TreeNodeState extends State<TreeNode>
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          icon,
+          widget.node.hasImage ? image : icon,
           Expanded(
             child: Text(
-              widget.node.label,
+              ' ${widget.node.label}',
               softWrap: widget.node.isParent
                   ? _theme.parentLabelOverflow == null
                   : _theme.labelOverflow == null,
