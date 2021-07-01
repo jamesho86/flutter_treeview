@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_treeview/src/tree_view_controller.dart';
-import 'package:flutter_treeview/src/tree_view_theme.dart';
 
-import 'models/node.dart';
+import 'tree_view_controller.dart';
+import 'tree_view_theme.dart';
 import 'tree_node.dart';
+import 'models/node.dart';
 
 /// Defines the [TreeView] widget.
 ///
@@ -30,20 +30,20 @@ class TreeView extends InheritedWidget {
   final TreeViewController controller;
 
   /// The tap handler for a node. Passes the node key.
-  final Function(String) onNodeTap;
+  final Function(String)? onNodeTap;
 
   /// The longpress handler for a node. Passes the node key.
-  final Function(String) onNodeLongPress;
+  final Function(String)? onNodeLongPress;
 
   /// Custom builder for nodes. Parameters are the build context and tree node.
-  final Function(BuildContext, Node) nodeBuilder;
+  final Widget Function(BuildContext, Node)? nodeBuilder;
 
   /// The double tap handler for a node. Passes the node key.
-  final Function(String) onNodeDoubleTap;
+  final Function(String)? onNodeDoubleTap;
 
   /// The expand/collapse handler for a node. Passes the node key and the
   /// expansion state.
-  final Function(String, bool) onExpansionChanged;
+  final Function(String, bool)? onExpansionChanged;
 
   /// The theme for [TreeView].
   final TreeViewTheme theme;
@@ -55,7 +55,7 @@ class TreeView extends InheritedWidget {
   final bool allowParentSelect;
 
   /// How the [TreeView] should respond to user input.
-  final ScrollPhysics physics;
+  final ScrollPhysics? physics;
 
   /// Whether the extent of the [TreeView] should be determined by the contents
   /// being viewed.
@@ -80,8 +80,8 @@ class TreeView extends InheritedWidget {
   final bool supportParentDoubleTap;
 
   TreeView({
-    Key key,
-    @required this.controller,
+    Key? key,
+    required this.controller,
     this.onNodeTap,
     this.onNodeLongPress,
     this.onNodeDoubleTap,
@@ -92,7 +92,7 @@ class TreeView extends InheritedWidget {
     this.shrinkWrap: false,
     this.primary: true,
     this.nodeBuilder,
-    TreeViewTheme theme,
+    TreeViewTheme? theme,
   })  : this.theme = theme ?? const TreeViewTheme(),
         super(
           key: key,
@@ -104,7 +104,7 @@ class TreeView extends InheritedWidget {
           ),
         );
 
-  static TreeView of(BuildContext context) =>
+  static TreeView? of(BuildContext context) =>
       context.dependOnInheritedWidgetOfExactType(aspect: TreeView);
 
   @override
@@ -121,9 +121,9 @@ class TreeView extends InheritedWidget {
 
 class _TreeViewData extends StatelessWidget {
   final TreeViewController _controller;
-  final bool shrinkWrap;
-  final bool primary;
-  final ScrollPhysics physics;
+  final bool? shrinkWrap;
+  final bool? primary;
+  final ScrollPhysics? physics;
 
   const _TreeViewData(this._controller,
       {this.shrinkWrap, this.primary, this.physics});
@@ -134,7 +134,7 @@ class _TreeViewData extends StatelessWidget {
     return Theme(
       data: _parentTheme.copyWith(hoverColor: Colors.grey.shade100),
       child: ListView(
-        shrinkWrap: shrinkWrap,
+        shrinkWrap: shrinkWrap!,
         primary: primary,
         physics: physics,
         padding: EdgeInsets.zero,

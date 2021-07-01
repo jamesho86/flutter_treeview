@@ -1,11 +1,10 @@
 import 'dart:convert';
 import 'dart:ui';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_treeview/src/tree_node.dart';
-import 'package:flutter_treeview/src/utilities.dart';
-import 'package:flutter_treeview/tree_view.dart';
+
+import '../tree_node.dart';
+import '../utilities.dart';
 
 /// Defines the data used to display a [TreeNode].
 ///
@@ -23,10 +22,10 @@ class Node<T> {
   final String label;
 
   /// An optional icon that is displayed on the [TreeNode].
-  final IconData icon;
+  final IconData? icon;
 
   /// display image instead of icon if present
-  final Image image;
+  final Image? image;
 
   /// The open or closed state of the [TreeNode]. Applicable only if the
   /// node is a parent
@@ -34,7 +33,7 @@ class Node<T> {
 
   /// Generic data model that can be assigned to the [TreeNode]. This makes
   /// it useful to assign and retrieve data associated with the [TreeNode]
-  final T data;
+  final T? data;
 
   /// The sub [Node]s of this object.
   final List<Node> children;
@@ -44,16 +43,15 @@ class Node<T> {
   final bool parent;
 
   const Node({
-    @required this.key,
-    @required this.label,
+    required this.key,
+    required this.label,
     this.children: const [],
     this.expanded: false,
     this.parent: false,
     this.icon,
     this.image,
     this.data,
-  })  : assert(key != null),
-        assert(label != null);
+  });
 
   /// Creates a [Node] from a string value. It generates a unique key.
   factory Node.fromLabel(String label) {
@@ -71,11 +69,10 @@ class Node<T> {
   /// value. Excepted values include: 1, yes, true and their
   /// associated string values.
   factory Node.fromMap(Map<String, dynamic> map) {
-    String _key = map['key'];
+    String? _key = map['key'];
     String _label = map['label'];
     var _data = map['data'];
-    IconData _icon;
-    Image _image;
+    Image? _image;
     List<Node> _children = [];
     if (_key == null) {
       _key = Utilities.generateRandom();
@@ -100,7 +97,6 @@ class Node<T> {
     return Node(
       key: '$_key',
       label: _label,
-      icon: _icon,
       image: _image,
       data: _data,
       expanded: Utilities.truthful(map['expanded']),
@@ -112,14 +108,14 @@ class Node<T> {
   /// Creates a copy of this object but with the given fields
   /// replaced with the new values.
   Node copyWith({
-    String key,
-    String label,
-    List<Node> children,
-    bool expanded,
-    bool parent,
-    IconData icon,
-    Image image,
-    T data,
+    String? key,
+    String? label,
+    List<Node>? children,
+    bool? expanded,
+    bool? parent,
+    IconData? icon,
+    Image? image,
+    T? data,
   }) =>
       Node(
         key: key ?? this.key,
@@ -149,12 +145,15 @@ class Node<T> {
     Map<String, dynamic> _map = {
       "key": key,
       "label": label,
-      "icon": icon == null ? null : icon.codePoint,
+      "icon": icon == null ? null : icon!.codePoint,
       "image": image == null ? null : image,
       "expanded": expanded,
       "parent": parent,
       "children": children.map((Node child) => child.asMap).toList(),
     };
+    if (data != null) {
+      _map['data'] = data;
+    }
     //TODO: figure out a means to check for getter or method on generic to include map from generic
     return _map;
   }

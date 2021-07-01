@@ -1,3 +1,33 @@
+## [1.0.3+2]
+* Removed unnecessary asserts
+* Removed null safety check on TreeView scroll physics property
+
+## [1.0.3+1]
+* Null check bug fixes
+
+## [1.0.2+1]
+* Bug fixes
+
+### Updated
+* Fixes: Null check operator used on a null value
+* Fixes: Node Data not being written when TreeViewController is converted back to a Map
+Create issue
+
+
+## [1.0.1+1]
+* Updated internal references
+
+## [1.0.0+1]
+
+### Updated
+* Updated project to null-safety
+
+## [0.10.0+1]
+
+### Updated
+* Fixed NodeExpander Size issue
+* Updated code to use proper hover color between web and mobile
+
 ## [0.9.0+1]
 
 ### Added

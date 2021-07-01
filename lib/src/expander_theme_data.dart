@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_treeview/src/tree_view_theme.dart';
-import 'package:flutter_treeview/tree_view.dart';
 
 const double _kDefaultExpanderSize = 30.0;
 
@@ -45,7 +44,7 @@ class ExpanderThemeData {
   final double size;
 
   /// The color for expander icon.
-  final Color color;
+  final Color? color;
 
   /// The [ExpanderModifier] for expander icon.
   final ExpanderModifier modifier;
@@ -82,12 +81,12 @@ class ExpanderThemeData {
   /// Creates a copy of this theme but with the given fields replaced with
   /// the new values.
   ExpanderThemeData copyWith({
-    Color color,
-    ExpanderType type,
-    ExpanderPosition position,
-    ExpanderModifier modifier,
-    bool animated,
-    double size,
+    Color? color,
+    ExpanderType? type,
+    ExpanderPosition? position,
+    ExpanderModifier? modifier,
+    bool? animated,
+    double? size,
   }) {
     return ExpanderThemeData(
       color: color ?? this.color,
@@ -102,7 +101,7 @@ class ExpanderThemeData {
   /// Returns a new theme that matches this expander theme but with some values
   /// replaced by the non-null parameters of the given icon theme. If the given
   /// expander theme is null, simply returns this theme.
-  ExpanderThemeData merge(ExpanderThemeData other) {
+  ExpanderThemeData merge(ExpanderThemeData? other) {
     if (other == null) return this;
     return copyWith(
       color: other.color,
@@ -115,9 +114,6 @@ class ExpanderThemeData {
   }
 
   ExpanderThemeData resolve(BuildContext context) => this;
-
-  /// Whether the properties of this object are non-null.
-  bool get isConcrete => color != null && size != null;
 
   @override
   bool operator ==(Object other) {
