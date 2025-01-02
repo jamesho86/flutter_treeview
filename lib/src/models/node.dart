@@ -165,7 +165,7 @@ class Node<T> {
 
   @override
   int get hashCode {
-    return hashValues(
+    return Object.hash(
       key,
       label,
       icon,
